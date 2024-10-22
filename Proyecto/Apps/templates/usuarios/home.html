@@ -1,0 +1,15 @@
+<!-- Apps/usuarios/templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Bienvenido a Sansamarket{% endblock %}
+
+{% block content %}
+<div class="inicio">
+    <h1>Bienvenido a Sansamarket</h1>
+    <p>Tu plataforma para intercambiar y vender objetos de segunda mano entre Sansanas y Sansanos.</p>
+    <div class="botones">
+        <a href="{% url 'productos:explorar' %}" class="btn">Explorar Productos</a>
+        <a href="{% url 'usuarios:registro' %}" class="btn">Registrarse</a>
+    </div>
+</div>
+{% endblock %}
