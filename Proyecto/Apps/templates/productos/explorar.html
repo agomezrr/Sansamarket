@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title %}Explorar Productos{% endblock %}
+<a href="{% url 'agregar_producto' producto.pk %}" class="btn btn-primary">Agregar Producto</a>
+
 
 {% block content %}
     <h1>Explorar Productos</h1>
