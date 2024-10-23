@@ -40,3 +40,6 @@ def eliminar_producto(request, pk):
         return redirect('lista_productos')
     return render(request, 'productos/eliminar_producto.html', {'producto': producto})
 
+def detalle_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)  # Busca el producto o devuelve un error 404
+    return render(request, 'productos/detalle_producto.html', {'producto': producto})

@@ -19,7 +19,7 @@ def registro(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
             login(request, user)
-            return redirect('perfil')
+            return redirect('usuarios:perfil')
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
@@ -31,7 +31,7 @@ def actualizar_perfil(request):
         form = PerfilForm(request.POST, request.FILES, instance=perfil)
         if form.is_valid():
             form.save()
-            return redirect('perfil')
+            return redirect('usuarios:perfil')
     else:
         form = PerfilForm(instance=perfil)
     
