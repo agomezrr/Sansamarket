@@ -5,7 +5,9 @@
         <h1 class="mb-4">Lista de Productos</h1>
 
         <!-- Botón para agregar un nuevo producto -->
-        <a href="{% url 'productos:agregar_producto' %}" class="btn btn-success mb-3">Agregar Producto</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'productos:agregar_producto' %}" class="btn btn-success mb-3">Agregar Producto</a>
+        {% endif %}
 
         <!-- Tabla para listar los productos -->
         <table class="table table-striped">
@@ -26,11 +28,13 @@
                     <td>{{ producto.descripcion|truncatewords:10 }}</td>
                     <td>{{ producto.precio }}</td>
                     <td>
-                        <!-- Botón para editar el producto -->
-                        <a href="{% url 'productos:actualizar_producto' producto.pk %}" class="btn btn-primary btn-sm">Editar</a>
+                        {% if producto.usuario == user %}
+                            <!-- Botón para editar el producto -->
+                            <a href="{% url 'productos:actualizar_producto' producto.pk %}" class="btn btn-primary btn-sm">Editar</a>
 
-                        <!-- Botón para eliminar el producto -->
-                        <a href="{% url 'productos:eliminar_producto' producto.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                            <!-- Botón para eliminar el producto -->
+                            <a href="{% url 'productos:eliminar_producto' producto.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
