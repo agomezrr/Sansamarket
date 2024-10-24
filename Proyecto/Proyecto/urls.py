@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from Proyecto.views import bienvenida
 from Apps.usuarios import views as usuario_views
-
+from django.conf import settings
 
 
 
@@ -29,4 +29,9 @@ urlpatterns = [
     path('usuarios/', include('Apps.usuarios.urls')),
     path('productos/', include('Apps.productos.urls')),
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

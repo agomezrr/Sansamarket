@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
@@ -56,4 +56,8 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'usuarios/login.html', {'form': form})
+
+def perfil_usuario(request, pk):
+    usuario = get_object_or_404(User, pk=pk)
+    return render(request, 'usuarios/perfil_usuario.html', {'usuario': usuario})
 

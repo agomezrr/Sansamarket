@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Agregar Producto</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
-    <a href="{% url 'productos:lista_productos' %}">Volver</a>
+    <div class="container mt-4">
+        <h1 class="mb-4">Agregar Producto</h1>
+        <form method="post" enctype="multipart/form-data">  <!-- Asegúrate de incluir enctype -->
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
+    </div>
 {% endblock %}

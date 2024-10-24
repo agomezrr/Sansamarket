@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Producto
 from .forms import ProductoForm
 
-
-
 # Create your views here.
 def explorar_productos(request):
     return render(request, 'productos/explorar.html')
@@ -14,10 +12,12 @@ def lista_productos(request):
 
 def agregar_producto(request):
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
+        form = ProductoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('lista_productos')
+            producto = form.save(commit=False)
+            producto.user = request.user  # Asigna el usuario actual
+            producto.save()
+            return redirect('productos:lista_productos')
     else:
         form = ProductoForm()
     return render(request, 'productos/agregar_producto.html', {'form': form})
@@ -28,7 +28,7 @@ def actualizar_producto(request, pk):
         form = ProductoForm(request.POST, instance=producto)
         if form.is_valid():
             form.save()
-            return redirect('lista_productos')
+            return redirect('productos:lista_productos')  # Asegúrate de usar el espacio de nombres correcto
     else:
         form = ProductoForm(instance=producto)
     return render(request, 'productos/actualizar_producto.html', {'form': form})
@@ -37,9 +37,9 @@ def eliminar_producto(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
     if request.method == 'POST':
         producto.delete()
-        return redirect('lista_productos')
+        return redirect('productos:lista_productos')  # Asegúrate de usar el espacio de nombres correcto
     return render(request, 'productos/eliminar_producto.html', {'producto': producto})
 
 def detalle_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)  # Busca el producto o devuelve un error 404
+    producto = get_object_or_404(Producto, pk=pk)
     return render(request, 'productos/detalle_producto.html', {'producto': producto})

@@ -15,7 +15,6 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Precio</th>
-                    <th scope="col">Stock</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -23,10 +22,9 @@
                 {% for producto in productos %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td>{{ producto.nombre }}</td>
+                    <td><a href="{% url 'productos:detalle_producto' producto.pk %}">{{ producto.nombre }}</a></td> <!-- Enlace a detalles del producto -->
                     <td>{{ producto.descripcion|truncatewords:10 }}</td>
                     <td>{{ producto.precio }}</td>
-                    <td>{{ producto.stock }}</td>
                     <td>
                         <!-- Botón para editar el producto -->
                         <a href="{% url 'productos:actualizar_producto' producto.pk %}" class="btn btn-primary btn-sm">Editar</a>
@@ -34,10 +32,6 @@
                         <!-- Botón para eliminar el producto -->
                         <a href="{% url 'productos:eliminar_producto' producto.pk %}" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center">No hay productos disponibles.</td>
                 </tr>
                 {% endfor %}
             </tbody>
