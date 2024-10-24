@@ -7,7 +7,7 @@ from django.shortcuts import render
 
 from django.contrib.auth.decorators import login_required
 from .forms import PerfilForm
-from .forms import LoginForm
+from .forms import LoginForm, UserForm
 from .models import Perfil
 # Create your views here.
 
@@ -19,10 +19,31 @@ def registro(request):
             user.set_password(form.cleaned_data['password'])
             user.save()
             login(request, user)
-            return redirect('usuarios:perfil')
+            return redirect('usuarios:perfil', pk=user.pk)  # Redirigir al perfil del usuario
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
+
+@login_required
+def editar_perfil(request):
+    user = request.user
+    perfil = get_object_or_404(Perfil, user=user)
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=user)
+        perfil_form = PerfilForm(request.POST, request.FILES, instance=perfil)
+        if user_form.is_valid() and perfil_form.is_valid():
+            user_form.save()
+            perfil_form.save()
+            return redirect('usuarios:perfil', pk=user.pk)
+    else:
+        user_form = UserForm(instance=user)
+        perfil_form = PerfilForm(instance=perfil)
+
+    return render(request, 'usuarios/editar_perfil.html', {
+        'user_form': user_form,
+        'perfil_form': perfil_form
+    })
 
 def actualizar_perfil(request):
     perfil, created = Perfil.objects.get_or_create(user=request.user)

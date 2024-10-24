@@ -10,7 +10,7 @@
                 {% if producto.imagen %}
                 <img src="{{ producto.imagen.url }}" class="img-fluid" alt="{{ producto.nombre }}">
                 {% endif %}
-                <p class="card-text mt-3"><strong>Publicado por:</strong> <a href="{% url 'usuarios:perfil' producto.user.pk %}">{{ producto.user.username }}</a></p> <!-- Enlace al perfil del usuario -->
+                <p class="card-text mt-3"><strong>Publicado por:</strong> <a href="{% url 'usuarios:perfil' producto.usuario.pk %}">{{ producto.usuario.username }}</a></p> <!-- Enlace al perfil del usuario -->
                 <a href="{% url 'productos:lista_productos' %}" class="btn btn-primary mt-3">Volver a la lista</a>
             </div>
         </div>

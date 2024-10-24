@@ -5,9 +5,14 @@
         <h1 class="mb-4">Perfil de {{ usuario.username }}</h1>
         <div class="card">
             <div class="card-body">
+                {% if usuario.perfil.avatar %}
+                <img src="{{ usuario.perfil.avatar.url }}" class="img-fluid rounded-circle mb-3" alt="{{ usuario.username }}">
+                {% endif %}
                 <p class="card-text"><strong>Nombre de usuario:</strong> {{ usuario.username }}</p>
                 <p class="card-text"><strong>Email:</strong> {{ usuario.email }}</p>
-                <!-- Agrega más información del usuario según sea necesario -->
+                {% if usuario.perfil.biografia %}
+                <p class="card-text"><strong>Biografía:</strong> {{ usuario.perfil.biografia }}</p>
+                {% endif %}
                 <a href="{% url 'productos:lista_productos' %}" class="btn btn-primary mt-3">Volver a la lista de productos</a>
             </div>
         </div>

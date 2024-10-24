@@ -47,9 +47,18 @@
 
     <div class="navbar">
         <a href="{% url 'home' %}">Inicio</a>
-        <a href="{% url 'usuarios:registro' %}">Registrarse</a>
-        <a href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
-        <a href="{% url 'usuarios:perfil' %}">Mi Perfil</a>
+        <a href="{% url 'productos:lista_productos' %}">Productos</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'usuarios:perfil' user.pk %}">Mi perfil</a>
+            <a href="{% url 'usuarios:editar_perfil' %}">Editar Perfil</a>
+            <form method="post" action="{% url 'usuarios:logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background: none; border: none; color: #f2f2f2; cursor: pointer; padding: 14px 16px; text-align: center; text-decoration: none;">Cerrar Sesión</button>
+            </form>
+        {% else %}
+            <a href="{% url 'usuarios:registro' %}">Registrarse</a>
+            <a href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
+        {% endif %}
     </div>
 
     <div class="container">
