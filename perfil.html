@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .profile-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .profile-container input[type="text"],
+        .profile-container input[type="email"],
+        .profile-container input[type="tel"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .profile-container input[type="file"] {
+            margin: 10px 0;
+        }
+
+        .profile-container button {
+            background-color:grey;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .profile-container button:hover {
+            background-color: grey 
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .input-label {
+            text-align: left;
+            display: block;
+            width: 90%;
+            margin: 10px auto 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Mi Perfil</h2>
+        <img src="default-profile.png" alt="Foto de perfil" class="profile-pic">
+        <form action="submit-profile" method="post" enctype="multipart/form-data">
+            <label for="nombre" class="input-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre">
+
+            <label for="email" class="input-label">Correo Electrónico</label>
+            <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico">
+
+            <label for="telefono" class="input-label">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono">
+
+            <label for="foto" class="input-label">Foto de Perfil</label>
+            <input type="file" id="foto" name="foto">
+
+            <button type="submit">Guardar Perfil</button>
+        </form>
+    </div>
+</body>
+</html>
