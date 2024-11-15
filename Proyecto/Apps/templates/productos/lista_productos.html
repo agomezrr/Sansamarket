@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load resenas_extras %}
 
 {% block content %}
     <div class="container mt-4">
@@ -14,9 +16,11 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Imagen</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Precio</th>
+                    <th scope="col">Calificación</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
@@ -24,9 +28,25 @@
                 {% for producto in productos %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
+                    <td>
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" class="img-thumbnail" alt="{{ producto.nombre }}" style="width: 100px; height: 100px;">
+                        {% else %}
+                            <img src="{% static 'images/default-product.jpg' %}" class="img-thumbnail" alt="Imagen no disponible" style="width: 100px; height: 100px;">
+                        {% endif %}
+                    </td>
                     <td><a href="{% url 'productos:detalle_producto' producto.pk %}">{{ producto.nombre }}</a></td> <!-- Enlace a detalles del producto -->
                     <td>{{ producto.descripcion|truncatewords:10 }}</td>
                     <td>{{ producto.precio }}</td>
+                    <td>
+                        {% with producto.usuario.resenas_recibidas.all as resenas %}
+                            {% if resenas %}
+                                {{ resenas|promedio_calificaciones }} / 5
+                            {% else %}
+                                Sin calificaciones
+                            {% endif %}
+                        {% endwith %}
+                    </td>
                     <td>
                         {% if producto.usuario == user %}
                             <!-- Botón para editar el producto -->

@@ -29,7 +29,7 @@ class LoginForm(forms.Form):
 class PerfilForm(forms.ModelForm):
     class Meta:
         model = Perfil
-        fields = ['avatar', 'biografia']  # Incluir el campo de biografía
+        fields = ['avatar', 'biografia', 'telefono', 'email_contacto']
 
 class UserForm(forms.ModelForm):
     class Meta:

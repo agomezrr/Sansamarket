@@ -19,7 +19,7 @@ from django.urls import path, include
 from Proyecto.views import bienvenida
 from Apps.usuarios import views as usuario_views
 from django.conf import settings
-
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('bienvenida/', bienvenida),
     path('usuarios/', include('Apps.usuarios.urls')),
     path('productos/', include('Apps.productos.urls')),
+    path('resenas/', include('Apps.resenas.urls')),
 ]
 
 if settings.DEBUG:

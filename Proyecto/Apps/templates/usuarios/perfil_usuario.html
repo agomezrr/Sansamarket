@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load resenas_extras %}
 
 {% block content %}
     <div class="container mt-4">
@@ -13,7 +14,25 @@
                 {% if usuario.perfil.biografia %}
                 <p class="card-text"><strong>Biografía:</strong> {{ usuario.perfil.biografia }}</p>
                 {% endif %}
-                <a href="{% url 'productos:lista_productos' %}" class="btn btn-primary mt-3">Volver a la lista de productos</a>
+                <p class="card-text"><strong>Calificación:</strong>
+                    {% with usuario.resenas_recibidas.all as resenas %}
+                        {% if resenas %}
+                            {{ resenas|promedio_calificaciones }} / 5
+                        {% else %}
+                            Sin calificaciones
+                        {% endif %}
+                    {% endwith %}
+                </p>
+                {% if user.is_authenticated %}
+                    <p class="card-text"><strong>Teléfono:</strong> {{ usuario.perfil.telefono }}</p>
+                    <p class="card-text"><strong>Email de contacto:</strong> {{ usuario.perfil.email_contacto }}</p>
+                {% else %}
+                    <p class="card-text"><strong>Contactar al vendedor:</strong> <a href="{% url 'usuarios:login' %}">Inicia sesión para ver los métodos de contacto</a></p>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <a href="{% url 'resenas:crear_resena' usuario.pk %}" class="btn btn-primary mt-3">Agregar Reseña</a>
+                {% endif %}
+                <a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-3">Volver a la lista de productos</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Reseñas de {{ usuario.username }}</h1>
+        <ul class="list-group">
+            {% for resena in resenas %}
+                <li class="list-group-item">
+                    <strong>{{ resena.calificador.username }}</strong> - {{ resena.calificacion }} estrellas
+                    <p>{{ resena.comentario }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+/* static/css/styles.css */
+.img-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.img-fluid {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
