@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sansamarket{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family:'Times New Roman', Times, serif
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .navbar img.logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 150px;
+            height: auto;
+            z-index: 1000;
+        }
+
+
+        .navbar-links {
+            display: flex;
+            justify-content: flex-start;
+            flex-grow: 1;
+            margin-left: 170px; 
+        }
+
+        
+        .navbar a, .navbar button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            background-color: rgb(125, 125, 250);
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .navbar a:hover, .navbar button:hover {
+            background-color: rgba(255, 0, 0, 0.486);
+            transform: scale(1.05);
+        }
+
+        .navbar a:active, .navbar button:active {
+            transform: scale(0.95);
+        }
+
+        
+        .navbar .button.productos-button {
+            background-color: yellow;
+            color: black;
+            font-size: 1.3rem;
+            padding: 15px 30px;
+            margin-left: 100px;
+            margin-right: 280px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .button.productos-button:hover {
+            background-color: rgb(255, 204, 0);
+            transform: scale(1.1);
+        }
+
+        
+        .navbar-auth {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .navbar-auth a, .navbar-auth button {
+            margin-left: 20px; 
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: white;
+            color: black;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <img src="../../media/logo/logo.JPG" alt="Logo" class="logo">
+        
+        
+        <div class="navbar-links">
+            <a href="{% url 'home' %}" class="button">Inicio</a>
+        </div>
+
+        
+        <a href="{% url 'productos:lista_productos' %}" class="button productos-button">Productos</a>
+
+       
+        {% if user.is_authenticated %}
+            <div class="navbar-auth">
+                <a href="{% url 'usuarios:perfil' user.pk %}" class="button">Mi perfil</a>
+                <a href="{% url 'usuarios:editar_perfil' %}" class="button">Editar Perfil</a>
+                <form method="post" action="{% url 'usuarios:logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="button">Cerrar Sesión</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="navbar-auth">
+                <a href="{% url 'usuarios:registro' %}" class="button">Registrarse</a>
+                <a href="{% url 'usuarios:login' %}" class="button">Iniciar Sesión</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Sansamarket. Creado por Equipo 8 'Los Tres'.</p>
+    </footer>
+
+</body>
+</html>
