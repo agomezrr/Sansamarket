@@ -29,10 +29,29 @@
                 {% else %}
                     <p class="card-text"><strong>Contactar al vendedor:</strong> <a href="{% url 'usuarios:login' %}">Inicia sesión para ver los métodos de contacto</a></p>
                 {% endif %}
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and usuario != user and not user_has_reviewed %}
                     <a href="{% url 'resenas:crear_resena' usuario.pk %}" class="btn btn-primary mt-3">Agregar Reseña</a>
                 {% endif %}
                 <a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-3">Volver a la lista de productos</a>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h2 class="mb-4">Reseñas</h2>
+                {% if resenas %}
+                    <ul class="list-group">
+                        {% for resena in resenas %}
+                            <li class="list-group-item">
+                                <p><strong>Calificación:</strong> {{ resena.calificacion }} / 5</p>
+                                <p><strong>Comentario:</strong> {{ resena.comentario }}</p>
+                                <p><strong>Fecha:</strong> {{ resena.fecha }}</p>
+                                <p><strong>Calificador:</strong> <a href="{% url 'usuarios:perfil' resena.calificador.pk %}">{{ resena.calificador.username }}</a></p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Este usuario no tiene reseñas.</p>
+                {% endif %}
             </div>
         </div>
     </div>

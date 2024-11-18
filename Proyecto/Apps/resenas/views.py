@@ -4,9 +4,18 @@ from .models import Resena
 from .forms import ResenaForm
 from django.contrib.auth.models import User
 
-@login_required
+login_required
 def crear_resena(request, usuario_id):
     usuario = get_object_or_404(User, id=usuario_id)
+    
+    # Verificar si el usuario está intentando agregar una reseña a su propio perfil
+    if usuario == request.user:
+        return redirect('usuarios:perfil', pk=usuario.id)
+    
+    # Verificar si el usuario ya ha agregado una reseña a este perfil
+    if Resena.objects.filter(usuario=usuario, calificador=request.user).exists():
+        return redirect('usuarios:perfil', pk=usuario.id)
+    
     if request.method == 'POST':
         form = ResenaForm(request.POST)
         if form.is_valid():

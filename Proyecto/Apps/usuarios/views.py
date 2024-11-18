@@ -2,13 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .forms import RegistroForm
-from django.shortcuts import render
-
-from django.contrib.auth.decorators import login_required
-from .forms import PerfilForm
-from .forms import LoginForm, UserForm
+from .forms import RegistroForm, PerfilForm, LoginForm, UserForm
 from .models import Perfil
+from Apps.resenas.models import Resena
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def registro(request):
@@ -80,5 +77,13 @@ def login_view(request):
 
 def perfil_usuario(request, pk):
     usuario = get_object_or_404(User, pk=pk)
-    return render(request, 'usuarios/perfil_usuario.html', {'usuario': usuario})
+    resenas = Resena.objects.filter(usuario=usuario)
+    user_has_reviewed = False
+    if request.user.is_authenticated:
+        user_has_reviewed = Resena.objects.filter(usuario=usuario, calificador=request.user).exists()
+    return render(request, 'usuarios/perfil_usuario.html', {
+        'usuario': usuario,
+        'resenas': resenas,
+        'user_has_reviewed': user_has_reviewed
+    })
 
