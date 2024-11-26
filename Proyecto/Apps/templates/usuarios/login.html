@@ -1,13 +1,66 @@
-{% extends 'base.html' %}
-
-{% block title %}Iniciar Sesión{% endblock %}
-
-{% block content %}
-<h2>Iniciar Sesión</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn">Ingresar</button>
-</form>
-<p>¿No tienes una cuenta? <a href="{% url 'usuarios:registro' %}">Regístrate aquí</a>.</p>
-{% endblock %}
+<style>
+    .btn {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 5px;
+        font-size: 1rem;
+        text-decoration: none;
+        color: white;
+        background-color: rgb(125, 125, 250);
+        border: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .btn:hover {
+        background-color: rgba(255, 0, 0, 0.486); 
+        transform: scale(1.05);
+    }
+    
+    .btn:active {
+        transform: scale(0.95); 
+    }
+    
+    
+    .btn-rojo {
+        background-color: red; 
+    }
+    
+    .btn-rojo:hover {
+        background-color: #D32F2F; 
+    }
+    
+    
+    .btn-amarillo {
+        display: inline-block;
+        background-color: #FFEB3B; 
+        color: black;
+        padding: 12px 20px;
+        border-radius: 25px;
+        text-decoration: none; 
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    
+    .btn-amarillo:hover {
+        background-color: #FBC02D; 
+        transform: scale(1.05);
+    }
+    
+    </style>
+    {% extends 'base.html' %}
+    
+    {% block title %}Iniciar Sesión{% endblock %}
+    
+    {% block content %}
+    <div class="form-container">
+        <h2>Iniciar Sesión</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-rojo">Ingresar</button> 
+        </form>
+        <p>¿No tienes una cuenta? <a href="{% url 'usuarios:registro' %}" class="btn-amarillo">Regístrate aquí</a>.</p> 
+    </div>
+    {% endblock %}

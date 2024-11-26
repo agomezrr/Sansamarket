@@ -1,42 +1,111 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Sansamarket{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+            font-family: 'Times New Roman', Times, serif;
         }
+
         .navbar {
-            background-color: #4CAF50;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            background-color: white;
             padding: 1rem;
-            text-align: center;
+            position: relative;
         }
-        .navbar a {
+
+        .navbar img.logo {
+            width: 300px;
+            height: auto;
+        }
+
+        .navbar-buttons {
+            display: flex;
+            align-items: center; 
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .navbar .volver-button {
+            background-color: rgb(125, 125, 250);
             color: white;
+            font-size: 1rem;
+            padding: 12px 20px;
             text-decoration: none;
-            font-size: 1.2rem;
-            margin: 0 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
+
+        .navbar .volver-button:hover {
+            background-color: rgba(255, 0, 0, 0.486);
+            transform: scale(1.05);
+        }
+
+        .navbar .auth-buttons a,
+        .navbar .auth-buttons button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            background-color: rgb(125, 125, 250);
+            border: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .navbar .auth-buttons a:hover,
+        .navbar .auth-buttons button:hover {
+            background-color: rgba(255, 0, 0, 0.486);
+            transform: scale(1.05);
+        }
+
+        .navbar .auth-buttons a:active,
+        .navbar .auth-buttons button:active {
+            transform: scale(0.95);
+        }
+
+        .productos-button {
+            background-color: yellow;
+            color: black;
+            font-size: 1.3rem;
+            padding: 15px 30px;
+            margin: 20px auto;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            width: fit-content;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .productos-button:hover {
+            background-color: rgb(255, 204, 0);
+            transform: scale(1.1);
+        }
+
         .container {
             max-width: 800px;
             margin: 2rem auto;
             padding: 2rem;
-            background-color: white;
+            background-color: #e4e1e1;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         footer {
             text-align: center;
             padding: 1rem;
-            background-color: #4CAF50;
-            color: white;
+            background-color: white;
+            color: black;
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -46,20 +115,27 @@
 <body>
 
     <div class="navbar">
-        <a href="{% url 'home' %}">Inicio</a>
-        <a href="{% url 'productos:lista_productos' %}">Productos</a>
-        {% if user.is_authenticated %}
-            <a href="{% url 'usuarios:perfil' user.pk %}">Mi perfil</a>
-            <a href="{% url 'usuarios:editar_perfil' %}">Editar Perfil</a>
-            <form method="post" action="{% url 'usuarios:logout' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background: none; border: none; color: #f2f2f2; cursor: pointer; padding: 14px 16px; text-align: center; text-decoration: none;">Cerrar Sesión</button>
-            </form>
-        {% else %}
-            <a href="{% url 'usuarios:registro' %}">Registrarse</a>
-            <a href="{% url 'usuarios:login' %}">Iniciar Sesión</a>
-        {% endif %}
+        <div class="navbar-buttons">
+            <a href="{% url 'home' %}" class="volver-button">Volver</a>
+            <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="logo">
+
+            <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'usuarios:perfil' user.pk %}" class="button">Mi perfil</a>
+                    <a href="{% url 'usuarios:editar_perfil' %}" class="button">Editar Perfil</a>
+                    <form method="post" action="{% url 'usuarios:logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="button">Cerrar Sesión</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'usuarios:registro' %}" class="button">Registrarse</a>
+                    <a href="{% url 'usuarios:login' %}" class="button">Iniciar Sesión</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
+
+    <a href="{% url 'productos:lista_productos' %}" class="productos-button">Productos</a>
 
     <div class="container">
         {% block content %}{% endblock %}
@@ -71,3 +147,4 @@
 
 </body>
 </html>
+

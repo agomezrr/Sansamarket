@@ -1,3 +1,25 @@
+<style>
+    .btn-rojo {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-rojo:hover {
+        background-color: darkred;
+        transform: scale(1.05);
+    }
+
+    .btn-rojo:active {
+        transform: scale(0.95);
+    }
+</style>
+
 {% extends 'base.html' %}
 
 {% block content %}
@@ -7,7 +29,7 @@
             {% csrf_token %}
             {{ user_form.as_p }}
             {{ perfil_form.as_p }}
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <button type="submit" class="btn-rojo mt-3">Guardar Cambios</button>
         </form>
     </div>
 {% endblock %}

@@ -1,3 +1,24 @@
+<style>
+    .btn-rojo {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-rojo:hover {
+        background-color: darkred;
+        transform: scale(1.05);
+    }
+
+    .btn-rojo:active {
+        transform: scale(0.95);
+    }
+</style>
 {% extends 'base.html' %}
 {% load resenas_extras %}
 
@@ -32,7 +53,8 @@
                 {% if user.is_authenticated and usuario != user and not user_has_reviewed %}
                     <a href="{% url 'resenas:crear_resena' usuario.pk %}" class="btn btn-primary mt-3">Agregar Reseña</a>
                 {% endif %}
-                <a href="{% url 'productos:lista_productos' %}" class="btn btn-secondary mt-3">Volver a la lista de productos</a>
+                <!-- Botón actualizado a rojo -->
+                <a href="{% url 'productos:lista_productos' %}" class="btn-rojo mt-3">Volver a la lista de productos</a>
             </div>
         </div>
         <div class="card mt-4">
